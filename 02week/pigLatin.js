@@ -6,37 +6,55 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+// pigLatin should take in a word and move all letters before first vowel to the end and add 'ay'
+// pigLatin('tiger') => should return 'igertay'
+// Take word and trim whitespace, toLowerCase and split into an array, word.trim().toLowerCase.split() - const formattedWord.
+// If word starts with a vowel, return word and add 'yay' to the end.
+// Loop through formattedWord, checking if its a vowel, its not a vowel continue.
+// If it is a vowel, slice array at that index and store in new array - const firstVowelAndBeyond and 
+// slice at 0 to vowel index and store in new array - const lettersBeforeVowels.
+// Break from loop to avoid more letters being pushed to lettersBeforeVowels.
+// Join arrays back into strings and
+// return firstVowelBeyond + lettersBeforeVowels + 'ay'.
+// Methods: split(), for loop, push(), slice(), if/else statements, join().
 
+// Create isValidInput() to check for truthy value and isNaN()
+// Methods: isNaN()
 
+// Create isVowel() to check if a letter is a vowel
+    // isVowel() should take a single character and return truthy or falsey value
+    // isVowel() should hold an array of vowels
+// Methods: indexOf()
+
+const isValidInput = (word) => word && isNaN(word);
+const isVowel = (letter) => {
+  const vowelArray = ['a', 'e', 'i', 'o', 'u'];
+  return vowelArray.indexOf(letter) > -1;
+}
 function pigLatin(word) {
-  let answer = '';
-  word = word.toLowerCase().trim();
-  let vowel = ["a", "e", "i", "o", "u"];
-  let duoPrefix = ["bl", "br", "ch", "ck", "cl", "cr", "dr","fl", "fr", "gh", "gl", "gr", "ng", "ph", "pl", "pr", "qu", "sc", "sh", "sk", "sl", "sm", "sn", "sp", "st", "sw", "th", "tr", "tw", "wh", "wr"];
-  let trioPrefix = ["nth", "sch", "scr", "shr", "spl", "spr", "squ", "str", "thr"];
-
-  for (let i = 0; i <= word.length; i++){
-    for(let v = 0; v <= vowel.length; v++){
-      if (word[0] == vowel[v]){
-        answer = word.concat("yay");
-        return answer;
+  
+  // Your code here
+  if(isValidInput(word)){
+    const formattedWord = word.trim().toLowerCase();
+    // if first letter in word is a vowel, return word with 'yay' at the end
+    if(isVowel(formattedWord[0])){
+      return `${formattedWord}yay`;
+    } else {
+      let lettersBeforeVowels = '';
+      let firstVowelAndBeyond = '';
+      for(let i = 0; i < formattedWord.length; i++) {
+        if(isVowel(formattedWord[i])){
+          firstVowelAndBeyond = formattedWord.slice(i);
+          lettersBeforeVowels = formattedWord.slice(0, i);
+          break;
+        } else {
+          lettersBeforeVowels = formattedWord;
+        }
       }
+      return `${firstVowelAndBeyond}${lettersBeforeVowels}ay`;
     }
-    for(let d = 0; d < duoPrefix.length; d++){
-      if ((word[0] + word[1]) == duoPrefix[d]){
-        answer = word.substring(2).concat(word[0]+ word[1] + "ay");
-        return answer;
-      }
-    }
-    for (let t = 0; t < trioPrefix.length; t++){
-      if ((word[0] + word[1] + word[3]) == trioPrefix[t]){
-        answer = word.substring(3).concat(word[0]+ word[1]+ word[2] + "ay");
-        return answer;
-      }
-    }
-    answer = word.substring(1).concat(word[0] + "ay");
-      return answer;
   }
+  return 'Invalid input';
 }
 
 function getPrompt() {
