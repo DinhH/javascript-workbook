@@ -12,6 +12,7 @@ let stacks = {
   b: [],
   c: []
 };
+let numberOfMoves = 0;
 
 function printStacks() {
   console.log("a: " + stacks.a);
@@ -19,24 +20,95 @@ function printStacks() {
   console.log("c: " + stacks.c);
 }
 
-function movePiece() {
-  // Your code here
+// towersOfHanoi takes two arguments, startStack and endStack, and pops() the last item from startStack and push() to endStack if move is legal
+// Check if input is valid
+//    -isValidInput()
+//      takes two string arguments
+//      check that inputs are not the same values, input1 != input2
+//      create an array to hold valid inputs ['a', 'b' , 'c']
+//      check that the index of startStack and endStack are in array
+// Check if move is legal
+//    -isLegal() 
+//      takes two arguments,
+//      check that startStack.length != 0
+//      checks if the last item on startStack is less than last item on endStack or  if endStack.length is 0
+// Move piece from start stack to end stack
+//    -movePiece()
+//      takes two arguments, startStack and endStack
+//      moves last item on startStack using pop() and pushes to endStack using push()
+//      methods: pop() and push()
+// Check for win after every move
+//    -checkForWin()
+//      takes 0 arguments
+//      check if all items are on one stack, cannot be the first stack (stacks.a)
+//      check the that the first array is empty and either the second or third array is empty
+// Reset game if check for win is true
+//    -reset()
+//      takes 0 arguments
+//      reset stacks to original
+//      is called after a win or user input is = to 'reset'
 
+
+const isValidInput = (startStack, endStack) => {
+  const validInputsArr = ['a','b','c'];
+  return (startStack != endStack) && (validInputsArr.indexOf(startStack) != -1) && (validInputsArr.indexOf(endStack) != -1);
 }
 
-function isLegal() {
-  // Your code here
-
+const isLegal = (startStack, endStack) => {
+  const startingStack = stacks[startStack];
+  const endingStack = stacks[endStack];
+  return (startingStack[startingStack.length - 1] < endingStack[endingStack.length - 1] || endingStack.length == 0) && startingStack.length != 0;
 }
 
-function checkForWin() {
-  // Your code here
-
+const movePiece = (startStack, endStack) => {
+  const removedItem = stacks[startStack].pop();
+  stacks[endStack].push(removedItem);
 }
 
-function towersOfHanoi(startStack, endStack) {
-  // Your code here
+const checkForWin = () => stacks.a.length === 0 && (stacks.b.length === 0 || stacks.c.length === 0);
+const reset = () => {
+  stacks = {
+    a: [4, 3, 2, 1],
+    b: [],
+    c: []
+  };
+}
+// Parent function
+const towersOfHanoi = (startStack, endStack) => {
+  if(startStack && endStack){
+    const startStackFormatted = startStack.trim().toLowerCase();
+    const endStackFormatted = endStack.trim().toLowerCase();
+    if(isValidInput(startStackFormatted, endStackFormatted)){
+      if(isLegal(startStackFormatted, endStackFormatted)){
+        movePiece(startStackFormatted, endStackFormatted);
+        numberOfMoves++;
+        if(checkForWin()) {
+          printStacks();
+          console.log(`You won in ${numberOfMoves} moves!`);
+          console.log(`Minimum amount of moves: 15`);
+          console.log('Starting new game!');
+          reset();
+        }
+      } else {
+        console.log('Invalid Move')
+      }
+    } else {
+      console.log('Invalid Move');
+    }
+  }
+}
 
+
+function restart(){
+  if (checkForWin()){
+    // restart game
+    console.log("Let's restart and play again!")
+    stacks = {
+      a: [4, 3, 2, 1],
+      b: [],
+      c: []
+    }
+  }
 }
 
 function getPrompt() {
