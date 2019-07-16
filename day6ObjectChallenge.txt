@@ -1,0 +1,23 @@
+//Challenge 1
+//write a function that returns the names from the object
+
+
+//challenge 2
+//add a new property to the object
+//name: Kathleen Antonelli
+//dob: 02/12/1921
+//education:  John W. Hallahan Catholic Girls’ High School
+//rank: 42312
+
+//Challenge 3
+//write a function that returns the name and rank for each entry
+USE FOREACH()
+
+//Challenge 4
+//add an ID property to each of the entries
+
+//challenge 5
+//write a function that returns date of birth in ascending order
+
+
+

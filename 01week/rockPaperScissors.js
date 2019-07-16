@@ -11,21 +11,15 @@ function rockPaperScissors(hand1, hand2) {
   hand1 = hand1.toLowerCase().trim();
   hand2 = hand2.toLowerCase().trim();
 
-  if (hand1 === hand2){
-    return "It's a tie!"
-  } else if (hand1 === "rock" && hand2 === "scissors"){
+  if(p1 === p2){
+    return "It's a tie..."
+  }else if((p1 === "rock" && p2 === "scissors") || (p1 === "paper" && p2 === "rock") || (p1 === "scissors" && p2 === "paper")){
     return "Hand one wins!"
-  } else if (hand1 === "scissors" && hand2 === "paper"){
-    return "Hand one wins!"
-  } else if (hand1 === "paper" && hand2 === "rock"){
-    return "Hand one wins!"
-  } else if (hand2 === "rock" && hand1 === "scissors"){
+  }else if((p2 === "rock" && p1 === "scissors") || (p2 === "paper" && p1 === "rock") || (p2 === "scissors" && p1 === "paper")){
     return "Hand two wins!"
-  } else if (hand2 === "scissors" && hand1 === "paper"){
-    return "Hand two wins!"
-  } else if (hand2 === "paper" && hand1 === "rock"){
-    return "Hand two wins!"
-  } 
+  }else{
+    return "Please check your spelling"
+  }
 }
 
 function getPrompt() {
