@@ -3,92 +3,116 @@
 const assert = require('assert');
 const readline = require('readline');
 const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
+	input: process.stdin,
+	output: process.stdout
 });
 
 let board = [];
 let solution = '';
-const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
 function printBoard() {
-  for (let i = 0; i < board.length; i++) {
-    console.log(board[i]);
-  }
-}
-
-function generateSolution() {
-  for (let i = 0; i < 4; i++) {
-    const randomIndex = getRandomInt(0, letters.length);
-    solution += letters[randomIndex];
-  }
+	for ( let i = 0; i < board.length; i++ ) {
+		console.log(board[i]);
+	}
 }
 
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+// Fixed the random solution generator
+function generateSolution() {
+	for ( let i = 0; solution.split('').length < 4; i++ ) {
+		const randomIndex = getRandomInt(0, letters.length);
+
+		if ( !solution.split('').includes(letters[randomIndex]) ) {
+			solution += letters[randomIndex];
+		}
+	}
+}
+
+function validInput(guessArray) {
+
+	// make sure we are only inputing possible guesses
+	for ( let i = 0; i < guessArray.length; i++ ) {
+		if ( !letters.includes( guessArray[i] ) ) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 function generateHint(guess) {
-  // your code here
-  const guessArr = guess.split('');
-  let correctLetter = 0;
-  let correctPosition = 0;
-  guessArr.forEach((letter, index)=>{
-    if(solution.indexOf(letter) !== -1){
-      correctLetter++;
-      if(solution[index] === letter){
-        correctPosition++;
-      }
-    }
-  })
-  return `${correctLetter} are correct, ${correctPosition} are in the right place`
-}
 
-const acceptableGuess=(guess)=>{
-  if(guess.length === 4){
-     let allLettersAreLegal = true;
-     const guessArr = guess.split('');
+	let redPeg = 0; // correct letter locations
+	let whitePeg = 0; // correct letter
 
-     guessArr.forEach((letter)=> {
-        if(letters.indexOf(letter) === -1 ){
-          allLettersAreLegal = false
-        }
-     })
-     return allLettersAreLegal
-  }
+	let guessArray = guess.split('');
+	let solutionArray = solution.split('');
+
+	// Loop through the array to find all correct letter locations
+	for ( let i = 0; i < solutionArray.length; i++ ) {
+
+		if ( guessArray[i] === solutionArray[i] ) {
+			redPeg++;
+			// remove the guess that has already been tested
+			solutionArray[i] = null;
+		}
+	}
+
+	// Loop through the updated array to find all correct letters
+	// without adding more than one white peg for multiple correct letters
+	for ( let i = 0; i < solutionArray.length; i++ ) {
+
+		let targetIndex = solutionArray.indexOf( guessArray[i] );
+
+		if( targetIndex > -1 ){
+			whitePeg++;
+			// remove all guesses that match the current guess
+			solutionArray[targetIndex] = null;
+		}
+	}
+
+	return redPeg + "-" + whitePeg
 }
 
 function mastermind(guess) {
-//   solution = 'abcd'; // Comment this out to generate a random solution
-  // your code here
-  
-  if(acceptableGuess(guess)){
-    if(guess === solution){
-      board = [];
-      return 'You guessed it!'
-    }else{
-      board.push(guess);
-      if(board.length > 9){
-        // console.log('out of turns')
-        board = [];
-        return `You lose. ${solution}`
-      }else{
-        return generateHint(guess)
-      }
-    }
-  }else{
-    return 'Please enter valid guess'
-  }
+
+	const guessArray = guess.split('');
+
+	if ( guessArray.length === 4 ) {
+
+		if ( guess === solution ) {
+
+			console.log('You guessed it!');
+			return 'You guessed it!'; 
+
+		} else if ( validInput(guessArray) ) {
+
+			board.unshift(guess + ": " + generateHint(guess))
+
+		} else {
+			console.log('You must enter a letter between "a" and "h".');
+		}
+
+	} else if ( guessArray.length < 4 ) {
+		console.log('Too few letters');
+	} else {
+		console.log('Too many letters');
+	}
 }
 
 
 function getPrompt() {
-  rl.question('guess: ', (guess) => {
-    console.log(mastermind(guess))
-    printBoard();
-    getPrompt();
-  });
+	rl.question('guess: ', (guess) => {
+		mastermind(guess);
+		printBoard();
+		getPrompt();
+	});
 }
+
 
 // Tests
 

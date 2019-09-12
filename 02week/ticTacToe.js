@@ -54,15 +54,18 @@ Check For Win...
         ];
 Switch player...
   if(player == 'X'){
-     player = 'O';
+    –– player = 'O';
   } else {
     player = 'X';
   }
 */
 
 const isValidInput = (row, column) => (!Number.isNaN(row) && row >= 0 && row <= 2) && (!Number.isNaN(column) && column >= 0 && column <= 2);
+
 const isLegalMove = (row, column) => board[row][column] === ' ';
+
 const addMove = (row, column) => board[row][column] = playerTurn;
+
 const switchPlayer = () => {
   return playerTurn == 'X' ? playerTurn = 'O' : playerTurn = 'X';
 }
@@ -82,15 +85,12 @@ function horizontalWin() {
 
 function verticalWin() {
   // Your code here
-  return board[0][0] === playerTurn && board[1][0] === playerTurn &&  board[2][0] === playerTurn ||
-         board[0][1] === playerTurn && board[1][1] === playerTurn &&  board[2][1] === playerTurn ||
-         board[0][2] === playerTurn && board[1][2] === playerTurn &&  board[2][2] === playerTurn;
+  return (board[0][0] === playerTurn && board[1][0] === playerTurn &&  board[2][0] === playerTurn || board[0][1] === playerTurn && board[1][1] === playerTurn &&  board[2][1] === playerTurn || board[0][2] === playerTurn && board[1][2] === playerTurn &&  board[2][2] === playerTurn);
 }
 
 function diagonalWin() {
   // Your code here
-  return board[0][0] === playerTurn && board[1][1] === playerTurn &&  board[2][2] === playerTurn ||
-         board[2][0] === playerTurn && board[1][1] === playerTurn &&  board[0][2] === playerTurn;
+  return (board[0][0] === playerTurn && board[1][1] === playerTurn &&  board[2][2] === playerTurn || board[2][0] === playerTurn && board[1][1] === playerTurn &&  board[0][2] === playerTurn)
 }
 
 function checkForWin() {
@@ -164,3 +164,7 @@ if (typeof describe === 'function') {
   getPrompt();
 
 }
+
+
+// user input (0,1)
+

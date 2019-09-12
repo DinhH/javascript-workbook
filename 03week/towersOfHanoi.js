@@ -87,7 +87,7 @@ const towersOfHanoi = (startStack, endStack) => {
           console.log(`You won in ${numberOfMoves} moves!`);
           console.log(`Minimum amount of moves: 15`);
           console.log('Starting new game!');
-          reset();
+          restart();
         }
       } else {
         console.log('Invalid Move')

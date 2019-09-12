@@ -1,19 +1,16 @@
 Last class:
     -Main topic
-       - Object Oriented Programming
+        - Regex
+        - High order function p2
     -Project
-        -Mission to Mars
-
+        - loops
+        - build .find() & .findIndex() from scratch
+        
 Today:
     -Daily Presentation
-        -Not today
     -whiteboarding challenge
-        - Given an array of numbers, raise each number by the power of 2 and return the sum of all the numbers that are evenly divisible by 4.
-         const myArr = [1, 5, 10, 4, 2] // => 120
-        -
+    -Code review
     -Main topic
-       - Object Oriented Programming Day 2
+        - OOP
     -Project
-        -Checkers
-
-
+        - Mission to Mars
