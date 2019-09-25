@@ -1,0 +1,18 @@
+
+First build this project in the terminal
+Work through the challenge together
+As always Whiteboard it and make a code plan
+Translate from English to psuedo code then to Javascript
+Present to Class
+
+Hackathon Prompt 1: Hang Man (12 points)
+
+Hackathon Prompt 2: Ramp Numbers (12 points)
+
+Hackathon Prompt 3: Count It (10 points)
+
+
+From Prep-work 
+    Remove Duplicates (2 points)(david,tomson,Chris)
+    Longest Sub-Sequence (2 points)
+    Length of the Longest Alternating Sub Array (2 points)
